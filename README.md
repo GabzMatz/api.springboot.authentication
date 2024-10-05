@@ -22,8 +22,6 @@ https://github.com/user-attachments/assets/b1e2b6a7-f3e3-4ce4-95f6-b88271df82c2
 
 ### Backend (Java 23 + Spring Boot)
 
-Estou empolgado em compartilhar um projeto recente onde desenvolvi uma **API REST completa** utilizando **Spring Boot**, implementando um CRUD (Criar, Ler, Atualizar e Deletar) de forma eficiente, com o banco de dados **H2**. Neste projeto, utilizei **JWT do Spring Security** para garantir a segurança das operações, proporcionando uma experiência robusta e confiável.
-
 - **API de Autenticação**: Endpoint para validar o login de usuários.
 - **API de Usuários**: CRUD de usuários, permitindo criação, visualização, edição e exclusão.
 - **Autenticação JWT**: Utilizado para garantir segurança nas operações de listagem e edição de usuários.
