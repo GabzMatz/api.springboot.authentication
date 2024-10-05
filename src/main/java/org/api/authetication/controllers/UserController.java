@@ -3,6 +3,7 @@ package org.api.authetication.controllers;
 
 import org.api.authetication.domain.user.Role;
 import org.api.authetication.domain.user.User;
+import org.api.authetication.dto.UpdateRequestDTO;
 import org.api.authetication.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -54,7 +55,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable String id, @RequestBody User updatedUser) {
+    public ResponseEntity<User> updateUser(@PathVariable String id, @RequestBody UpdateRequestDTO updateRequestDTO) {
         // Verifica se o ID é válido e se o usuário existe no repositório
         if (id == null || !userRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
@@ -69,10 +70,7 @@ public class UserController {
         }
 
         // Atualiza os dados do usuário
-        userToUpdate.setName(updatedUser.getName());
-        userToUpdate.setEmail(updatedUser.getEmail());
-        userToUpdate.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
-        userToUpdate.setRole(updatedUser.getRole());
+        userToUpdate.setName(updateRequestDTO.name());
 
 
         // Salva as mudanças no repositório
