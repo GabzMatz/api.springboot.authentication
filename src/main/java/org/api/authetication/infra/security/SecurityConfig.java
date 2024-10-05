@@ -54,6 +54,7 @@ public class SecurityConfig {
                         .requestMatchers( "/h2-console/**").permitAll()
                         .requestMatchers("/admin/**").hasAuthority("ADMIN") // Verifica a role ADMIN
                         .requestMatchers(HttpMethod.DELETE, "/user/{id}").hasAuthority("ADMIN") // Deleção precisa da role ADMIN
+                        .requestMatchers(HttpMethod.PUT, "/user/{id}").hasAuthority("ADMIN") // Deleção precisa da role ADMIN
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
