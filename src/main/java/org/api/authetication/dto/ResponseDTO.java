@@ -1,4 +1,6 @@
 package org.api.authetication.dto;
 
-public record ResponseDTO(String name, String token) {
+import org.api.authetication.domain.user.Role;
+
+public record ResponseDTO(String name, String token, Role role) {
 }

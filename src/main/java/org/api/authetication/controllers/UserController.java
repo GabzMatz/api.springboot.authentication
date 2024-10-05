@@ -45,6 +45,8 @@ public class UserController {
         if (userToDelete.getRole() == Role.ADMIN) {
             return ResponseEntity.status(403).build();
         }
+        userRepository.deleteById(id);
+
         return ResponseEntity.noContent().build();
     }
 
