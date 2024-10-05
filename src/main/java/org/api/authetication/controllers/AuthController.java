@@ -8,6 +8,7 @@ import org.api.authetication.infra.security.TokenService;
 import org.api.authetication.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.api.authetication.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,6 +25,8 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository repository;
     private final TokenService tokenService;
+    private final UserService userService;
+
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginRequestDTO body){
@@ -48,6 +51,7 @@ public class AuthController {
             this.repository.save(newUser);
 
             String token = this.tokenService.generateToken(newUser);
+            userService.saveUser(newUser);
             return ResponseEntity.ok(new ResponseDTO(newUser.getName(), token));
         }
         return ResponseEntity.badRequest().build();
