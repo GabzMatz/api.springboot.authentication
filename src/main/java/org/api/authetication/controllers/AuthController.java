@@ -1,5 +1,6 @@
 package org.api.authetication.controllers;
 
+import org.api.authetication.domain.user.Role;
 import org.api.authetication.domain.user.User;
 import org.api.authetication.dto.LoginRequestDTO;
 import org.api.authetication.dto.RegisterRequestDTO;
@@ -7,9 +8,6 @@ import org.api.authetication.dto.ResponseDTO;
 import org.api.authetication.infra.security.TokenService;
 import org.api.authetication.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.api.authetication.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -48,7 +46,11 @@ public class AuthController {
             newUser.setPassword(passwordEncoder.encode(body.password()));
             newUser.setEmail(body.email());
             newUser.setName(body.name());
-            newUser.setRole(body.role());
+            if (body.role() == null) {
+                newUser.setRole(Role.USER);
+            } else {
+                newUser.setRole(body.role());
+            }
             this.repository.save(newUser);
 
             String token = this.tokenService.generateToken(newUser);
@@ -56,10 +58,5 @@ public class AuthController {
             return ResponseEntity.ok(new ResponseDTO(newUser.getName(), token));
         }
         return ResponseEntity.badRequest().build();
-    }
-    @RequestMapping("/show")
-    public ResponseEntity show(){
-        List<User> users = repository.findAll();
-        return ResponseEntity.ok(users);
     }
 }
