@@ -25,7 +25,7 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository repository;
     private final TokenService tokenService;
-    private final UserService userService;
+    private final UserRepository userRepository;
 
 
     @PostMapping("/login")
@@ -48,10 +48,11 @@ public class AuthController {
             newUser.setPassword(passwordEncoder.encode(body.password()));
             newUser.setEmail(body.email());
             newUser.setName(body.name());
+            newUser.setRole(body.role());
             this.repository.save(newUser);
 
             String token = this.tokenService.generateToken(newUser);
-            userService.saveUser(newUser);
+            userRepository.save(newUser);
             return ResponseEntity.ok(new ResponseDTO(newUser.getName(), token));
         }
         return ResponseEntity.badRequest().build();
